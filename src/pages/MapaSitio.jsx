@@ -2,10 +2,6 @@ import { Link } from 'react-router-dom'
 
 import "./MapaSitio.css"
 
-import { Link } from 'react-router-dom'
-
-import "./MapaSitio.css"
-
 function MapaSitio() {
     return (
         <div>
