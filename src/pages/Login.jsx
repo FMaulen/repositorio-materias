@@ -1,9 +1,4 @@
 import { Link } from 'react-router-dom';
-let names = ["Pepe", "Juan", "Carlos"]
-
-names.map((name) => {
-    return <h1> {name} </h1>
-})
 
 import "./Login.css"
 

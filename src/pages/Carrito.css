@@ -1,0 +1,30 @@
+.carrito-layout{
+    display: flex;
+    gap: 30px
+}
+
+.carrito-grid{
+    display:grid;
+    border: solid red;
+    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+    gap: 30px;
+}
+
+.carrito-container{
+    display: flex;
+}
+
+.carrito-aside{
+    width: 300px;
+    flex-shrink: 0;
+    border-left: 1px solid #ccc;
+    border: solid blue;
+}
+
+.carrito-grid article {
+    border-radius: 6px;
+    background-color: var(--color-card);
+    padding: 1rem;
+    text-align: center;
+
+}

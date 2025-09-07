@@ -6,6 +6,7 @@ names.map((name) => {
     return <h1> {name} </h1>
 })
 
+import "./Registrarse.css"
 
 function Registrarse() {
     return (
@@ -14,14 +15,14 @@ function Registrarse() {
                 <div className="form-div-registro">
                     <label htmlFor="user">Usuario</label><br />
                     <input type="text" placeholder="Ingrese usuario" name="user" required /><br />
-                    <label htmlFor="user">Correo</label><br />
+                    <label htmlFor="mail">Correo</label><br />
                     <input type="text" placeholder="Ingrese correo electronico" name="mail" required /><br />
-                    <label htmlFor="user">Nombre</label><br />
+                    <label htmlFor="fname">Nombre</label><br />
                     <input type="text" placeholder="Ingrese su nombre" name="fname" required /><br />
-                    <label htmlFor="user">Apellido</label><br />
+                    <label htmlFor="lname">Apellido</label><br />
                     <input type="text" placeholder="Ingrese su apellido" name="lname" required /><br />
                     <label htmlFor="password" >Contraseña</label><br />
-                    <input type="password" name="password" placeholder="Ingrese contraseña" required />
+                    <input type="password" name="password" placeholder="Ingrese contraseña" required minLength={8}/>
                     <div className="form-register-buttons">
                         <button type="submit" className='register-btn'>Registrarse</button>
                         <Link to="/Login" className="register-btn">

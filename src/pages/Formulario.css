@@ -1,0 +1,54 @@
+.formulario-header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    background-color: var(--color-card);
+    color: var(--color-accent);
+    font-size: 125%;
+    font-weight: bold;
+}
+
+.formulario-content {
+    margin: 12px 90px;
+    padding: 10px 40px;
+    font-weight: bold;
+    border-radius: 8px;
+    background-color: var(--color-card);
+}
+
+.btn-div {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.btn-submit-formulario {
+    cursor: pointer;
+    font-weight: bold;
+    background-color: var(--color-card);
+    color: var(--color-primary-text);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 90%;
+    transition: color 0.3s;
+}
+
+.btn-submit-formulario:hover {
+    color: var(--color-accent);
+}
+
+
+/* Para ocultar las flechitas del input type number  */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
