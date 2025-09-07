@@ -9,6 +9,7 @@ import Carrito from "./pages/Carrito.jsx";
 import Login from "./pages/Login.jsx";
 import Formulario from "./pages/Formulario.jsx";
 import MapaSitio from "./pages/MapaSitio.jsx";
+import Registrarse from "./pages/Registrarse.jsx"
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/subir-material" element={<Formulario />} />
                         <Route path="/mapa-sitio" element={<MapaSitio />} />
+                        <Route path="/registrarse" element={<Registrarse />} />
                     </Routes>
                 </main>
                 

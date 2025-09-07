@@ -1,4 +1,4 @@
-function MapaSitio() {
+function Productos() {
     return (
         <div>
             <h1>Produtos</h1>
@@ -7,4 +7,4 @@ function MapaSitio() {
     );
 }
 
-export default MapaSitio;
+export default Productos;
