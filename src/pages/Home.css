@@ -27,7 +27,7 @@
 }
 
 .materia-card {
-  background-color: var(--color-card);
+  background: linear-gradient(to top, rgba(45, 55, 72, 0.7), rgba(45, 55, 72, 0.4));
   border-radius: 10px;
   padding: 1.5rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -36,6 +36,9 @@
   justify-content: space-between;
   min-height: 150px;
   transition: transform 0.2s, box-shadow 0.2s;
+
+  position: relative;
+  overflow: hidden;
 }
 
 .materia-card:hover {
@@ -77,4 +80,20 @@
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.materia-card-background {
+  position:absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.15;
+  filter: blur(2px);
+  transition: transform 0.3s ease;
+}
+
+.materia-card:hover .materia-card-background {
+  transform: scale(1.1); 
 }
