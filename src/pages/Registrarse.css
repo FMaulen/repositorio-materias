@@ -81,3 +81,15 @@ input{
 input[name=remember]{
     accent-color: var(--color-accent);
 }
+
+.msg-error {
+  display: block;         /* ocupa su propia línea */
+  margin: 4px 0 8px;      /* separa del siguiente label */
+  color: #e53935;         /* rojo para errores */
+  font-size: 0.85rem;
+}
+
+.msg-form {
+  margin-top: 12px;
+  font-weight: 600;
+}
