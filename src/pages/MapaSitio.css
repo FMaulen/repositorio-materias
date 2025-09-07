@@ -1,3 +1,29 @@
-li:hover{
+.mapa li a:hover{
     color: var(--color-accent);
+}
+
+
+.mapa li a {
+  color: white;             /*y color blanco pa que se vea*/
+  text-decoration: none;    /* se quita el subrayado de los links pa que se vea bien*/
+  transition: color 0.3s ease;
+}
+
+
+.lorem {
+  margin-top: 40px;
+  padding: 20px;
+
+}
+
+.lorem h2 {
+  color: var(--color-accent); 
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.lorem p {
+  color: #ddd;
+  line-height: 1.6;
+  margin-bottom: 20px;
 }
