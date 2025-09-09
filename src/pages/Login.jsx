@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import SHA256 from 'crypto-js/SHA256';
+import sha256 from 'crypto-js/sha256';
 
 import "./Login.css"
 import { useState } from 'react';
