@@ -12,7 +12,7 @@ function Login() {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        const hashedPassword = SHA256(password).toString();
+        const hashedPassword = sha256(password).toString();
 
         console.log('Contraseña original:',password)
         console.log('Contraseña encriptada (hash):',hashedPassword)
