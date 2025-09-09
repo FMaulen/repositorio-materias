@@ -4,7 +4,7 @@ import './Header.css';
 function Header() {
     return (
         <header className="header">
-            <div className="start"><img alt="" src="../src/assets/icon.png" className='header-img'/></div>
+            <div className="start"><img alt="" src="/icon.png" className='header-img'/></div>
             <div className="banner">
                 <h1>Repositorio Escuela Informatica Y Telecomunicaciones DuocUC</h1>
             </div>
