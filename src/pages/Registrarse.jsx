@@ -149,7 +149,7 @@ export default function Registrarse() {
     setFormMsg('Datos válidos. Registrado correctamente.');
     setForm({ user: '', mail: '', rut: '', fname: '', lname: '', password: '' });
     setErrors({});
-    setTimeout(() => navigate('/Login'), 1500);
+    setTimeout(() => navigate('/login', { state: { email: form.mail.trim().toLowerCase() } }), 1500);
   };
 
   return (

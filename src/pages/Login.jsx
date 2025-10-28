@@ -1,10 +1,20 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect  } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const location = useLocation(); 
+  const navigate = useNavigate();
+  //pre-rellena si viene el email por registro
+  useEffect(() => {
+    if (location.state?.email) {
+      setUser(location.state.email);
+    }
+  }, [location.state]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,6 +29,7 @@ const Login = () => {
     console.log("Usuario:", user);
     console.log("Contraseña encriptada (hash):", hashedPassword);
     alert(`Login simulado exitoso para el usuario: ${user}`);
+    navigate('/');
   };
 
   return (
@@ -43,19 +54,34 @@ const Login = () => {
             required
           />
         </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">Contraseña</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="form-control"
-            placeholder="Ingrese contraseña"
-            required
-          />
+          <div className="mb-3">
+          <label htmlFor="password" className="form-label">
+            Contraseña
+          </label>
+
+          {/* Campo con botón de mostrar/ocultar */}
+          <div className="password-wrapper">
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="form-control"
+              placeholder="Ingrese contraseña"
+              required
+            />
+            <button
+              type="button"
+              className="toggle-password"
+              onClick={() => setShowPassword(!showPassword)}
+              aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </button>
+          </div>
         </div>
+          
         <div className="mb-3 form-check">
           <input type="checkbox" id="remember" className="form-check-input" />
           <label htmlFor="remember" className="form-check-label">
