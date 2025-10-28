@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import { useState } from 'react';
 import sha256 from 'crypto-js/sha256';
-import './Registrarse.css';
+import './Registrarse.css'; 
 import React from 'react';
 
 // Política fuerte: ≥8, mayúscula, minúscula, número y símbolo
@@ -47,6 +47,8 @@ function formatRut(rutStr) {
 /* ============================= */
 
 export default function Registrarse() {
+  const navigate = useNavigate();
+
   // Estado del formulario (controlado)
   const [form, setForm] = useState({
     user: '',
@@ -147,7 +149,7 @@ export default function Registrarse() {
     setFormMsg('Datos válidos. Registrado correctamente.');
     setForm({ user: '', mail: '', rut: '', fname: '', lname: '', password: '' });
     setErrors({});
-    setTimeout(() => setFormMsg(''), 1500);
+    setTimeout(() => navigate('/Login'), 1500);
   };
 
   return (
