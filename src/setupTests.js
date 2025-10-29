@@ -1,5 +1,1 @@
-import jasmineDOM from 'jasmine-dom';
-
-beforeAll(() => {
-  jasmine.getEnv().addMatchers(jasmineDOM);
-});
+import '@testing-library/jest-dom';

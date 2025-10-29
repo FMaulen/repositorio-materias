@@ -1,4 +1,6 @@
+import React from 'react';
 import './Home.css';
+import { User } from '../components/User';
 
 function Home() {
     const materias = [
@@ -31,6 +33,21 @@ function Home() {
                         </div>
                     </div>
                 ))}
+            </div>
+
+            <div className="api-demo-section mt-5 p-4 rounded" style={{ backgroundColor: 'var(--color-card)' }}>
+                <h3 className="text-center mb-3" style={{ color: 'var(--color-accent)' }}>
+                    Demostración de Consumo de API
+                </h3>
+                <p className="text-center text-secondary mb-4">
+                    Este componente realiza una llamada a una API externa para obtener datos de un usuario.
+                </p>
+                
+                <div className="card shadow-sm">
+                    <div className="card-body" style={{ backgroundColor: 'var(--color-accent)' }}>
+                        <User userId={2} /> 
+                    </div>
+                </div>
             </div>
 
             <button className="help-button btn btn-primary rounded-circle">?</button>
