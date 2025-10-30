@@ -83,9 +83,9 @@ input[name=remember]{
 }
 
 .msg-error {
-  display: block;         /* ocupa su propia línea */
-  margin: 4px 0 8px;      /* separa del siguiente label */
-  color: #e53935;         /* rojo para errores */
+  display: block;        
+  margin: 4px 0 8px;      
+  color: #e53935;       
   font-size: 0.85rem;
 }
 
@@ -115,3 +115,15 @@ input[name=remember]{
     transform: translateY(-50%);
 }
 .toggle-password:hover { color: #fff; }
+
+#user, .msg-error + .hint-text {
+  margin-bottom: 1.2rem; /* aumenta espacio debajo del campo usuario */
+}
+.hint-text {
+  display: block;
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: -12px;
+  margin-bottom: 12px;
+  
+}

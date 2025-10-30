@@ -1,4 +1,6 @@
+import React from 'react';
 import './Home.css';
+import { User } from '../components/User';
 
 function Home() {
     const materias = [
@@ -11,24 +13,44 @@ function Home() {
     ];
 
     return (
-        <div className="home-container">
-            <div className="info-banner">
-                <p>Aqui va a ir algo de informacion o informacion referente a los archivos</p>
+        <div className="home-container container">
+            <div className="info-banner alert alert-info my-4">
+                <p className="mb-0">Aquí va a ir algo de información o información referente a los archivos</p>
             </div>
 
-            <h2>Materias Disponibles</h2>
-            <div className="materias-grid">
+            <h2 className="text-center mb-4">Materias Disponibles</h2>
+            
+            <div className="row g-4">
                 {materias.map((materia, index) => (
-                    <div key={index} className="materia-card">
-                        {materia.img && <img src={materia.img} alt="" className='materia-card-background'/>}
-                        <h3>{materia.nombre}</h3>
-                        <p className="materia-codigo">{materia.codigo}</p>
-                        <span className="materia-archivos">{materia.archivos} archivos</span>
+                    <div key={index} className="col-12 col-md-6 col-lg-4">
+                        <div className="materia-card h-100">
+                            {materia.img && <img src={materia.img} alt={`Fondo para ${materia.nombre}`} className='materia-card-background'/>}
+                            <div className="card-content">
+                                <h3>{materia.nombre}</h3>
+                                <p className="materia-codigo">{materia.codigo}</p>
+                                <span className="materia-archivos">{materia.archivos} archivos</span>
+                            </div>
+                        </div>
                     </div>
                 ))}
             </div>
-            {/* Requisito boton de ayuda */}
-            <button className="help-button">?</button>
+
+            <div className="api-demo-section mt-5 p-4 rounded" style={{ backgroundColor: 'var(--color-card)' }}>
+                <h3 className="text-center mb-3" style={{ color: 'var(--color-accent)' }}>
+                    Demostración de Consumo de API
+                </h3>
+                <p className="text-center text-secondary mb-4">
+                    Este componente realiza una llamada a una API externa para obtener datos de un usuario.
+                </p>
+                
+                <div className="card shadow-sm">
+                    <div className="card-body" style={{ backgroundColor: 'var(--color-accent)' }}>
+                        <User userId={2} /> 
+                    </div>
+                </div>
+            </div>
+
+            <button className="help-button btn btn-primary rounded-circle">?</button>
         </div>
     );
 }

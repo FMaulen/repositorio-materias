@@ -1,17 +1,23 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import { useState } from 'react';
 import sha256 from 'crypto-js/sha256';
-import './Registrarse.css';
+import './Registrarse.css'; 
+import React from 'react';
 
 // Política fuerte: ≥8, mayúscula, minúscula, número y símbolo
 const STRONG_PASSWORD = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
+const USER_REGEX = /^[a-zA-Z0-9._]{3,}$/; // Al menos 3 caracteres, letras, números, . _
+
 
 /* ===== Utilidades de RUT ===== */
+
+//Limpia puntos y guion, quita los espacios y pone mayúscula 
 function normalizeRut(rutStr) {
   if (!rutStr) return '';
   return rutStr.replace(/[.\-]/g, '').trim().toUpperCase();
 }
 
+// calcula el digito verificador usando el algoritmo ofical 
 
 function computeDV(body) {
   let sum = 0, mul = 2;
@@ -26,6 +32,7 @@ function computeDV(body) {
 }
 
 
+//valida que el cuerpo sea numerico y que el dv sea correcto
 function validateRut(rutStr) {
   const clean = normalizeRut(rutStr);
   if (clean.length < 2) return false;
@@ -36,6 +43,7 @@ function validateRut(rutStr) {
 }
 
 
+//formatea el rut con puntos y guion 
 function formatRut(rutStr) {
   const clean = normalizeRut(rutStr);
   if (clean.length < 2) return clean;
@@ -49,6 +57,8 @@ function formatRut(rutStr) {
 /* ============================= */
 
 export default function Registrarse() {
+  const navigate = useNavigate(); //redirige al login tras registro exitoso
+
   // Estado del formulario (controlado)
   const [form, setForm] = useState({
     user: '',
@@ -58,7 +68,6 @@ export default function Registrarse() {
     lname: '',
     password: '',
   });
-
 
   const [errors, setErrors] = useState({});
   const [formMsg, setFormMsg] = useState('');
@@ -70,6 +79,8 @@ export default function Registrarse() {
 
     if (name === 'user') {
       if (!val.trim()) return 'El usuario es obligatorio.';
+      if (!USER_REGEX.test(val))
+        return 'Debe tener al menos 3 caracteres y solo puede incluir letras, números, punto o guion bajo.';
     }
     if (name === 'fname') {
       if (!val.trim()) return 'El nombre es obligatorio.';
@@ -78,12 +89,11 @@ export default function Registrarse() {
       if (!val.trim()) return 'El apellido es obligatorio.';
     }
     if (name === 'mail') {
-      
       if (!val.trim()) return 'El correo es obligatorio.';
       const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!regex.test(val)) return 'Correo inválido.';
       const dominio = val.split('@')[1]?.toLowerCase();
-      const permitidos = ['duocuc.cl']; // ajusta si quieres
+      const permitidos = ['duocuc.cl'];
       if (!permitidos.includes(dominio)) return 'Solo se permite duocuc.cl.';
     }
     if (name === 'rut') {
@@ -145,13 +155,14 @@ export default function Registrarse() {
       passwordHash: sha256(form.password).toString(),
       createdAt: new Date().toISOString(),
     };
+
     localStorage.setItem('user.current', JSON.stringify(userObj));
     localStorage.setItem('auth.token', 'demo');
 
     setFormMsg('Datos válidos. Registrado correctamente.');
     setForm({ user: '', mail: '', rut: '', fname: '', lname: '', password: '' });
     setErrors({});
-    setTimeout(() => setFormMsg(''), 1500);
+    setTimeout(() => navigate('/login', { state: { email: form.mail.trim().toLowerCase() } }), 1500);
   };
 
   return (
@@ -160,66 +171,78 @@ export default function Registrarse() {
         <button type="submit" style={{ display: 'none' }} aria-hidden="true" />
         <div className="form-div-registro">
 
-          <label htmlFor="user">Usuario</label><br />
+          <label htmlFor="user">Usuario</label>
           <input
             type="text"
+            id="user"
             placeholder="Ingrese usuario"
             name="user"
             value={form.user}
             onChange={onChange}
             required
-          /><br />
-          <small className="msg-error">{errors.user}</small><br />
+          />
+          <small className="msg-error">{errors.user}</small>
+          <small className="hint-text">
+            El usuario debe tener al menos 3 caracteres (letras, números, "." o "_").
+          </small>
 
-          <label htmlFor="mail">Correo</label><br />
+          <label htmlFor="mail">Correo</label>
           <input
             type="email"
+            id="mail"
             placeholder="Ingrese correo electrónico"
             name="mail"
             value={form.mail}
             onChange={onChange}
             required
-          /><br />
-          <small className="msg-error">{errors.mail}</small><br />
+          />
+          <small className="msg-error">{errors.mail}</small>
+          <small className="hint-text">
+            Use su correo institucional que termine en <strong>@duocuc.cl</strong>.
+          </small>
 
           <label htmlFor="rut">RUT</label><br />
           <input
             type="text"
+            id="rut"
             placeholder="12.345.678-5"
             name="rut"
             value={form.rut}
             onChange={onChange}
             onBlur={handleRutBlur}
             required
-          /><br />
+          />
           <small className="msg-error">{errors.rut}</small><br />
 
           <label htmlFor="fname">Nombre</label><br />
           <input
             type="text"
+            id="fname"
             placeholder="Ingrese su nombre"
             name="fname"
             value={form.fname}
             onChange={onChange}
             required
-          /><br />
+          />
           <small className="msg-error">{errors.fname}</small><br />
 
           <label htmlFor="lname">Apellido</label><br />
           <input
             type="text"
+            id="lname"
             placeholder="Ingrese su apellido"
             name="lname"
             value={form.lname}
             onChange={onChange}
             required
-          /><br />
+          />
           <small className="msg-error">{errors.lname}</small><br />
 
           <label htmlFor="password">Contraseña</label><br />
           <div className="password-wrapper">
             <input
               type={showPassword ? 'text' : 'password'}
+              id="password"
               name="password"
               placeholder="Ingrese contraseña"
               value={form.password}

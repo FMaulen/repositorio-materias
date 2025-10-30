@@ -14,10 +14,10 @@ import Registrarse from "./pages/Registrarse.jsx"
 function App() {
     return (
         <Router>
-            <div className="container">
+            <div className="app-container">
                 <Header />
                 
-                <main className="main-content">
+                <main className="main-content container py-4">
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/materias" element={<Productos />} />

@@ -1,3 +1,4 @@
+
 :root {
   --color-background: #1A202C;
   --color-card: #2D3748;
@@ -18,7 +19,7 @@ body {
   color: var(--color-text-primary);
 }
 
-.container {
+.app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -26,9 +27,4 @@ body {
 
 .main-content {
   flex: 1;
-  padding: 2rem;
-  width: 100%;
-  max-width: 1200px; 
-  margin: 0 auto; 
-  box-sizing: border-box; 
 }
