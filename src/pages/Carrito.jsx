@@ -40,25 +40,25 @@ function Carrito() {
                 <p className="title-card">Apuntes <br/>ciberseguridad</p>
                     <p className="date-card">06/08/2025</p>
                     <p className="price-card">$19.99</p>
-                    <img src="../src/assets/pdf_icon.png" alt="archivo tipo pdf" className="carrito-img"/>
+                    <img src="/pdf_icon.png" alt="archivo tipo pdf" className="carrito-img"/>
                 </div> 
                 <div className="carrito-card">
                     <p className="title-card">Apuntes Python</p>
                     <p className="date-card">04/07/2025</p>
                     <p className="price-card">$9.99</p>
-                    <img src="../src/assets/pdf_icon.png" alt="archivo tipo pdf" className="carrito-img"/>
+                    <img src="/pdf_icon.png" alt="archivo tipo pdf" className="carrito-img"/>
                 </div> 
                 <div className="carrito-card">
                     <p className="title-card">Mer, Mr BD I</p>
                     <p className="date-card">04/21/2025</p>
                     <p className="price-card">$4.99</p>
-                    <img src="../src/assets/pdf_icon.png" alt="archivo tipo pdf" className="carrito-img"/>
+                    <img src="/pdf_icon.png" alt="archivo tipo pdf" className="carrito-img"/>
                 </div> 
                 <div className="carrito-card">
                     <p className="title-card">Apuntes Java</p>
                     <p className="date-card">28/03/2025</p>
                     <p className="price-card">$1.99</p>
-                    <img src="../src/assets/pdf_icon.png" alt="archivo tipo pdf" className="carrito-img"/>
+                    <img src="/pdf_icon.png" alt="archivo tipo pdf" className="carrito-img"/>
                 </div> 
                 <div className="carrito-total">
                     <p>Archivos totales: 4</p>

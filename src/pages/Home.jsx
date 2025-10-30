@@ -4,12 +4,12 @@ import { User } from '../components/User';
 
 function Home() {
     const materias = [
-        { nombre: "FUNDAMENTOS DE PROGRAMACION", codigo: "DSY-1101", archivos: 0, img: "../src/assets/python.jpeg" },
-        { nombre: "NIVELACION MATEMATICA", codigo: "MAT-1111", archivos: 47, img: "../src/assets/math.jpg" },
-        { nombre: "BASES DE INNOVACION", codigo: "FPY-1101", archivos: 7, img: "../src/assets/inno.jpg" },
-        { nombre: "INTRODUCCION AL CLOUD COMPUTING", codigo: "BIY-1101", archivos: 4, img: "../src/assets/aws.jpg" },
-        { nombre: "DESARROLLO ORIENTADO A OBJETOS", codigo: "DSY-1102", archivos: 6, img: "../src/assets/java.jpg" },
-        { nombre: "BASE DE DATOS APLICADA I", codigo: "BDY-1101", archivos: 0, img: "../src/assets/oracle.jpg"},
+        { nombre: "FUNDAMENTOS DE PROGRAMACION", codigo: "DSY-1101", archivos: 0, img: "/python.jpeg" },
+        { nombre: "NIVELACION MATEMATICA", codigo: "MAT-1111", archivos: 47, img: "/math.jpg" },
+        { nombre: "BASES DE INNOVACION", codigo: "FPY-1101", archivos: 7, img: "/inno.jpg" },
+        { nombre: "INTRODUCCION AL CLOUD COMPUTING", codigo: "BIY-1101", archivos: 4, img: "/aws.jpg" },
+        { nombre: "DESARROLLO ORIENTADO A OBJETOS", codigo: "DSY-1102", archivos: 6, img: "/java.jpg" },
+        { nombre: "BASE DE DATOS APLICADA I", codigo: "BDY-1101", archivos: 0, img: "/oracle.jpg"},
     ];
 
     return (
