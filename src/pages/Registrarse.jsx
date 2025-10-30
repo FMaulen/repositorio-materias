@@ -6,12 +6,18 @@ import React from 'react';
 
 // Política fuerte: ≥8, mayúscula, minúscula, número y símbolo
 const STRONG_PASSWORD = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
+const USER_REGEX = /^[a-zA-Z0-9._]{3,}$/; // Al menos 3 caracteres, letras, números, . _
+
 
 /* ===== Utilidades de RUT ===== */
+
+//Limpia puntos y guion, quita los espacios y pone mayúscula 
 function normalizeRut(rutStr) {
   if (!rutStr) return '';
   return rutStr.replace(/[.\-]/g, '').trim().toUpperCase();
 }
+
+// calcula el digito verificador usando el algoritmo ofical 
 
 function computeDV(body) {
   let sum = 0, mul = 2;
@@ -25,6 +31,8 @@ function computeDV(body) {
   return String(mod);
 }
 
+
+//valida que el cuerpo sea numerico y que el dv sea correcto
 function validateRut(rutStr) {
   const clean = normalizeRut(rutStr);
   if (clean.length < 2) return false;
@@ -34,6 +42,8 @@ function validateRut(rutStr) {
   return computeDV(body) === dv;
 }
 
+
+//formatea el rut con puntos y guion 
 function formatRut(rutStr) {
   const clean = normalizeRut(rutStr);
   if (clean.length < 2) return clean;
@@ -47,7 +57,7 @@ function formatRut(rutStr) {
 /* ============================= */
 
 export default function Registrarse() {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); //redirige al login tras registro exitoso
 
   // Estado del formulario (controlado)
   const [form, setForm] = useState({
@@ -69,6 +79,8 @@ export default function Registrarse() {
 
     if (name === 'user') {
       if (!val.trim()) return 'El usuario es obligatorio.';
+      if (!USER_REGEX.test(val))
+        return 'Debe tener al menos 3 caracteres y solo puede incluir letras, números, punto o guion bajo.';
     }
     if (name === 'fname') {
       if (!val.trim()) return 'El nombre es obligatorio.';
@@ -143,6 +155,7 @@ export default function Registrarse() {
       passwordHash: sha256(form.password).toString(),
       createdAt: new Date().toISOString(),
     };
+
     localStorage.setItem('user.current', JSON.stringify(userObj));
     localStorage.setItem('auth.token', 'demo');
 
@@ -158,7 +171,7 @@ export default function Registrarse() {
         <button type="submit" style={{ display: 'none' }} aria-hidden="true" />
         <div className="form-div-registro">
 
-          <label htmlFor="user">Usuario</label><br />
+          <label htmlFor="user">Usuario</label>
           <input
             type="text"
             id="user"
@@ -168,9 +181,12 @@ export default function Registrarse() {
             onChange={onChange}
             required
           />
-          <small className="msg-error">{errors.user}</small><br />
+          <small className="msg-error">{errors.user}</small>
+          <small className="hint-text">
+            El usuario debe tener al menos 3 caracteres (letras, números, "." o "_").
+          </small>
 
-          <label htmlFor="mail">Correo</label><br />
+          <label htmlFor="mail">Correo</label>
           <input
             type="email"
             id="mail"
@@ -180,7 +196,10 @@ export default function Registrarse() {
             onChange={onChange}
             required
           />
-          <small className="msg-error">{errors.mail}</small><br />
+          <small className="msg-error">{errors.mail}</small>
+          <small className="hint-text">
+            Use su correo institucional que termine en <strong>@duocuc.cl</strong>.
+          </small>
 
           <label htmlFor="rut">RUT</label><br />
           <input

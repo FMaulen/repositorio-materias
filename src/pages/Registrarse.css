@@ -115,3 +115,15 @@ input[name=remember]{
     transform: translateY(-50%);
 }
 .toggle-password:hover { color: #fff; }
+
+#user, .msg-error + .hint-text {
+  margin-bottom: 1.2rem; /* aumenta espacio debajo del campo usuario */
+}
+.hint-text {
+  display: block;
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: -12px;
+  margin-bottom: 12px;
+  
+}
