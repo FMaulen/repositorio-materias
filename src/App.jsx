@@ -10,6 +10,7 @@ import Login from "./pages/Login.jsx";
 import Formulario from "./pages/Formulario.jsx";
 import MapaSitio from "./pages/MapaSitio.jsx";
 import Registrarse from "./pages/Registrarse.jsx"
+import RutaProtegida from "./components/RutaProtegida.jsx"; // Va a prohibir el acceso si no se esta logueado a las paginas que esten con esta etiqutea
 
 function App() {
     return (
@@ -21,9 +22,9 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/materias" element={<Productos />} />
-                        <Route path="/carrito" element={<Carrito />} />
+                        <Route path="/carrito" element={ <RutaProtegida> <Carrito /> </RutaProtegida> } />
                         <Route path="/login" element={<Login />} />
-                        <Route path="/subir-material" element={<Formulario />} />
+                        <Route path="/subir-material" element={ <RutaProtegida> <Formulario /> </RutaProtegida> } />
                         <Route path="/mapa-sitio" element={<MapaSitio />} />
                         <Route path="/registrarse" element={<Registrarse />} />
                     </Routes>

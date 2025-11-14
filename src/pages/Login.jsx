@@ -1,11 +1,15 @@
 import React, { useState, useEffect  } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { loginUser } from "../services/api"; // La función de nuestra API
+import { useAuth } from "../context/AuthContext"; // Nuestro hook de contexto
 
 const Login = () => {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const { login } = useAuth();
 
   const location = useLocation(); 
   const navigate = useNavigate();
@@ -16,21 +20,36 @@ const Login = () => {
     }
   }, [location.state]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!user || !password) {
-      setError("Ambos campos son obligatorios.");
-      return;
-    }
-    setError("");
-    const hashedPassword = crypto.subtle
-      ? crypto.subtle.digest("SHA-256", new TextEncoder().encode(password))
-      : null;
-    console.log("Usuario:", user);
-    console.log("Contraseña encriptada (hash):", hashedPassword);
-    alert(`Login simulado exitoso para el usuario: ${user}`);
+const handleSubmit = async (e) => { // <-- Convertir a async
+  e.preventDefault();
+  if (!user || !password) {
+    setError("Ambos campos son obligatorios.");
+    return;
+  }
+  setError(""); // Limpiamos errores previos
+
+  try {
+    // Preparamos las credenciales para enviar a la API
+    const credentials = {
+      nombreUsuario: user,
+      password: password,
+    };
+
+    const response = await loginUser(credentials); // <-- LLAMADA A LA API
+
+    // Si el login es exitoso, la API nos devuelve un token.
+    // Usamos la función 'login' de nuestro AuthContext para guardarlo.
+    login(response.token);
+
+    // Redirigimos al usuario a la página de inicio.
     navigate('/');
-  };
+
+  } catch (error) {
+    // Si la API devuelve un error (ej: credenciales incorrectas), lo mostramos.
+    setError(error.message || 'Ocurrió un error al iniciar sesión.');
+    console.error(error);
+  }
+};
 
   return (
     <div className="container d-flex justify-content-center align-items-center" style={{ marginTop: "150px" }}>

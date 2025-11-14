@@ -3,6 +3,9 @@ import { useState } from 'react';
 import sha256 from 'crypto-js/sha256';
 import './Registrarse.css'; 
 import React from 'react';
+// Nuevas importaciones
+import { registerUser } from '../services/api'; // La función de nuestra API
+import { useAuth } from '../context/AuthContext'; // El hook de nuestro contexto
 
 // Política fuerte: ≥8, mayúscula, minúscula, número y símbolo
 const STRONG_PASSWORD = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
@@ -58,6 +61,7 @@ function formatRut(rutStr) {
 
 export default function Registrarse() {
   const navigate = useNavigate(); //redirige al login tras registro exitoso
+  const { login } = useAuth(); // Obtenemos la funcion login del ocntext
 
   // Estado del formulario (controlado)
   const [form, setForm] = useState({
@@ -137,32 +141,42 @@ export default function Registrarse() {
     setErrors(next);
     return Object.keys(next).length === 0;
   };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => { 
     e.preventDefault();
     if (!validateAll()) {
       setFormMsg('Corrige los errores antes de continuar.');
       return;
     }
 
-    // Registro simulado
-    const userObj = {
-      user: form.user.trim(),
-      mail: form.mail.trim().toLowerCase(),
-      rut: formatRut(form.rut),
-      fname: form.fname.trim(),
-      lname: form.lname.trim(),
-      passwordHash: sha256(form.password).toString(),
-      createdAt: new Date().toISOString(),
+    // Aca se preparan los datos para enviarlos a la API
+    /*  Ojo que los nombres de las propiedades tiene que ser iguales a los de RegisterRequest.java en la API  */
+    const userData = {
+      nombreUsuario: form.user.trim(),
+      email: form.mail.trim().toLowerCase(),
+      rut: form.rut, // Ya ta formateado
+      nombre: form.fname.trim(),
+      apellido: form.lname.trim(),
+      password: form.password,
     };
 
-    localStorage.setItem('user.current', JSON.stringify(userObj));
-    localStorage.setItem('auth.token', 'demo');
+    try {
+      setFormMsg('Registrando...');
+      const response = await registerUser(userData); // Aca se llama a la API 
 
-    setFormMsg('Datos válidos. Registrado correctamente.');
-    setForm({ user: '', mail: '', rut: '', fname: '', lname: '', password: '' });
-    setErrors({});
-    setTimeout(() => navigate('/login', { state: { email: form.mail.trim().toLowerCase() } }), 1500);
+      // Si el registro es exitoso la API devuelve un token
+      // Se usa la funcion login del AuthContext para guardarlo
+      login(response.token);
+
+      setFormMsg('¡Registro exitoso! Redirigiendo...');
+      
+      // Redireccion a la pagina principal ya que ahora esta logueado
+      setTimeout(() => navigate('/'), 2000);
+
+    } catch (error) {
+      // Si la API devuelve un error se muestra
+      setFormMsg(error.message || 'Ocurrió un error en el registro.');
+      console.error(error);
+    }
   };
 
   return (
