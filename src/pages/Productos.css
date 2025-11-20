@@ -1,0 +1,174 @@
+.materiales-page {
+  padding-block: 2rem;
+}
+
+.materiales-header {
+  margin-bottom: 1.5rem;
+}
+
+.materiales-header h1 {
+  margin-bottom: 0.5rem;
+}
+
+.materiales-header p {
+  margin: 0;
+  color: var(--color-text-secondary, #aaa);
+}
+
+/* CONTENEDOR PRINCIPAL DEL CARRUSEL */
+.materiales-carousel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* CARRIL HORIZONTAL */
+.materiales-track {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 0.5rem 0.25rem 1rem;
+  scrollbar-width: thin;          /* Firefox */
+}
+
+/* Ocultar/estilizar scrollbar (Chrome) */
+.materiales-track::-webkit-scrollbar {
+  height: 6px;
+}
+
+.materiales-track::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.materiales-track::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+}
+
+/* TARJETAS DE MATERIAL */
+.material-card {
+  min-width: 260px;
+  max-width: 280px;
+  background-color: var(--color-card);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 0 0 auto; /* que no se estire, para el carrusel */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.material-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+}
+
+.material-card-body {
+  margin-bottom: 0.75rem;
+}
+
+.material-card-title {
+  font-size: 1.05rem;
+  margin-bottom: 0.25rem;
+}
+
+.material-card-description {
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+  color: var(--color-text-secondary, #bbb);
+}
+
+.material-card-date {
+  font-size: 0.8rem;
+  margin-bottom: 0.25rem;
+  opacity: 0.8;
+}
+
+.material-card-price {
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+/* BOTÓN "AÑADIR A MI SELECCIÓN" */
+.material-card-btn {
+  margin-top: 0.5rem;
+  border: none;
+  border-radius: 999px;
+  padding: 0.45rem 0.75rem;
+  background-color: var(--color-accent);
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.material-card-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+  opacity: 0.95;
+}
+
+/* BOTONES DE FLECHA DEL CARRUSEL */
+.carousel-btn {
+  border: none;
+  border-radius: 999px;
+  width: 34px;
+  height: 34px;
+  font-size: 1.6rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.carousel-btn:hover {
+  background-color: rgba(0, 0, 0, 0.75);
+  transform: scale(1.05);
+}
+
+.carousel-btn-left {
+  margin-right: 0.25rem;
+}
+
+.carousel-btn-right {
+  margin-left: 0.25rem;
+}
+
+
+@media (max-width: 576px) {
+  .carousel-btn {
+    display: none;
+  }
+}
+
+
+.materiales-row {
+  margin-bottom: 2rem;
+}
+
+.materiales-row-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.materiales-row-header h2 {
+  margin: 0;
+}
+
+.materiales-row-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+

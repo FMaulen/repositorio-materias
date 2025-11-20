@@ -1,6 +1,6 @@
 import "./InputField.css"
 
-function InputField({ label, type, name, placeholder, required = false}){
+function InputField({ label, type, name, placeholder, required = false, value, onChange,}){
 
     return (
         <div className="form-group">

@@ -8,11 +8,14 @@ import './styles.css'
 
 import App from './App.jsx'
 import { AuthProvider } from './context/AuthContext';  // Este es nuevo, metemos el provider
+import { CartProvider } from './context/CartContext'; 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthProvider>  { /* Y envolvemos la app en el coso */ }
-      <App />
+      <CartProvider>
+        <App />
+      </CartProvider>
     </AuthProvider>
   </StrictMode>,
 )
