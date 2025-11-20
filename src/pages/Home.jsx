@@ -61,7 +61,7 @@ function Home() {
             <div className="row g-4">
                 {materias.map((materia, index) => {
                     const nombre = materia.nombre || materia.name || "Materia sin nombre";
-                    const codigo = materia.codigo || materia.clave || materia.id || "—";
+                    const codigo = (materia.code || materia.codigo || "").trim() || materia.id || "—";
                     const archivos = materia.archivos || materia.cantidadMateriales || 0;
                     const img = imagenesPorCodigo[codigo] || "/defaultbg.jpg";
 

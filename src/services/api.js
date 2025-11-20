@@ -1,62 +1,28 @@
-// url base de la api 
-const API_BASE_URL = 'http://localhost:8080/api/auth';
-
 const BASE_URL = 'http://localhost:8080';
+const API_AUTH_URL = `${BASE_URL}/api/auth`;
 
-/**
- * Función para registrar un nuevo usuario.
- * @param {object} userData - Datos del formulario de registro.
- * @returns {Promise<object>} - La respuesta del servidor (que incluye el token).
- */
-export const registerUser = async (userData) => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/register`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData),
-    });
-
-    if (!response.ok) {
-      // Si el servidor responde con un error (ej: 400, 500), lo manejamos aquí.
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Error al registrar el usuario.');
-    }
-
-    return response.json(); // Devuelve los datos de la respuesta (ej: { token: "..." })
-  } catch (error) {
-    console.error('Error en registerUser:', error);
-    // Re-lanzamos el error para que el componente que llama pueda manejarlo.
-    throw error;
-  }
+// --- AUTH ---
+export const loginUser = async (credentials) => {
+  const response = await fetch(`${API_AUTH_URL}/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(credentials),
+  });
+  if (!response.ok) throw new Error('Usuario o contraseña incorrectos.');
+  return response.json();
 };
 
-/**
- * Función para iniciar sesión.
- * @param {object} credentials - Credenciales del usuario { nombreUsuario, password }.
- * @returns {Promise<object>} - La respuesta del servidor (que incluye el token).
- */
-export const loginUser = async (credentials) => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(credentials),
-    });
-
-    if (!response.ok) {
-      // errores de login, credenciales incorrectas (401 o 403)
-      throw new Error('Usuario o contraseña incorrectos.');
-    }
-
-    return response.json();
-  } catch (error) {
-    console.error('Error en loginUser:', error);
-    throw error;
+export const registerUser = async (userData) => {
+  const response = await fetch(`${API_AUTH_URL}/register`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userData),
+  });
+  if (!response.ok) {
+      const err = await response.json();
+      throw new Error(err.message || 'Error al registrar.');
   }
+  return response.json();
 };
 
 // despues borro esto, no molesta (Creo)
@@ -76,19 +42,16 @@ export async function fetchMaterias() {
   return res.json();
 }
 
-
-//Materiales
+// --- MATERIALES ---
 export async function fetchMateriales(materiaId) {
   const url = materiaId
     ? `${BASE_URL}/api/materiales?materiaId=${materiaId}`
     : `${BASE_URL}/api/materiales`;
-
   const res = await fetch(url);
   if (!res.ok) throw new Error('Error al obtener materiales');
   return res.json();
 }
 
-//subir material
 export async function subirMaterial(datos, token) {
   const res = await fetch(`${BASE_URL}/api/materiales`, {
     method: 'POST',
@@ -98,51 +61,112 @@ export async function subirMaterial(datos, token) {
     },
     body: JSON.stringify(datos),
   });
-
-   if (!res.ok) {
-    const text = await res.text().catch(() => '');
-    console.error('Error al subir material:', res.status, text);
-    throw new Error('Error al subir material');
-  }
+   if (!res.ok) throw new Error('Error al subir material');
   return res.json();
-  
 }
 
 //Pedidos 
 export async function crearPedido(materialIds, token) {
-  try {
-    const res = await fetch(`${BASE_URL}/api/pedidos`, {
+  const res = await fetch(`${BASE_URL}/api/pedidos`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ materialIds }),   
-    });
-
-    if (!res.ok) {
-      const text = await res.text().catch(() => '');
-      console.error('Error al crear pedido:', res.status, text);
-      
-      throw new Error(`Error al crear el pedido (HTTP ${res.status})`);
-    }
-
-    // Por si el backend devuelve 204 
-    if (res.status === 204) return null;
-
-    const text = await res.text();
-    return text ? JSON.parse(text) : null;
-  } catch (err) {
-    console.error('Error de red al crear pedido:', err);
-    throw err;
-  }
+  });
+  if (!res.ok) throw new Error(`Error al crear el pedido`);
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
 }
 //api clima
 export async function fetchClimaSantiago() {
   const res = await fetch(
     'https://api.open-meteo.com/v1/forecast?latitude=-33.45&longitude=-70.66&current_weather=true'
-  
   );
   if (!res.ok) throw new Error('Error al obtener clima');
   return res.json();
+}
+
+export async function fetchUsuarios(token) {
+  const res = await fetch(`${BASE_URL}/api/usuarios`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  return res.json();
+}
+
+export async function eliminarUsuario(id, token) {
+  await fetch(`${BASE_URL}/api/usuarios/${id}`, {
+    method: 'DELETE',
+    headers: { Authorization: `Bearer ${token}` }
+  });
+}
+
+export async function cambiarRolUsuario(id, nuevoRol, token) {
+  await fetch(`${BASE_URL}/api/usuarios/${id}/rol`, {
+    method: 'PUT',
+    headers: { 
+        'Content-Type': 'text/plain', 
+        Authorization: `Bearer ${token}` 
+    },
+    body: nuevoRol
+  });
+}
+
+export async function eliminarMaterial(id, token) {
+    await fetch(`${BASE_URL}/api/materiales/${id}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${token}` }
+    });
+}
+
+export async function crearMateria(datos, token) {
+  const res = await fetch(`${BASE_URL}/api/materias`, {
+    method: 'POST',
+    headers: { 
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}` 
+    },
+    body: JSON.stringify(datos),
+  });
+  if (!res.ok) throw new Error('Error al crear materia');
+  return res.json();
+}
+
+export async function eliminarMateriaAdmin(id, token) {
+    const res = await fetch(`${BASE_URL}/api/materias/${id}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    if (!res.ok) throw new Error('Error al eliminar materia');
+}
+
+export async function crearUsuarioAdmin(datos, token) {
+    const res = await fetch(`${BASE_URL}/api/usuarios`, {
+      method: 'POST',
+      headers: { 
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}` 
+      },
+      body: JSON.stringify(datos),
+    });
+    if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.message || 'Error al crear usuario');
+    }
+    return res.json();
+}
+
+export async function fetchPedidos(token) {
+    const res = await fetch(`${BASE_URL}/api/pedidos`, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+    return res.json();
+}
+
+export async function eliminarPedidoAdmin(id, token) {
+    await fetch(`${BASE_URL}/api/pedidos/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` }
+    });
 }

@@ -1,0 +1,155 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.payment-modal {
+    background-color: var(--color-card);
+    width: 100%;
+    max-width: 450px;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    border: 1px solid #4A5568;
+    position: relative;
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.payment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.payment-header h2 {
+    margin: 0;
+    color: var(--color-accent);
+    font-size: 1.5rem;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.card-preview {
+    background: linear-gradient(135deg, #1a202c, #2d3748);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid var(--color-accent);
+    position: relative;
+    overflow: hidden;
+}
+
+.card-chip {
+    width: 50px;
+    height: 35px;
+    background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728);
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.card-number-display {
+    font-family: 'Courier New', monospace;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    color: white;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 2px black;
+}
+
+.card-details-display {
+    display: flex;
+    justify-content: space-between;
+    color: #cbd5e0;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.payment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.input-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.input-group label {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    font-weight: bold;
+}
+
+.input-payment {
+    background-color: var(--color-header);
+    border: 1px solid #4A5568;
+    color: white;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.input-payment:focus {
+    outline: none;
+    border-color: var(--color-accent);
+}
+
+.input-payment.error {
+    border-color: #e53e3e;
+}
+
+.btn-pay-final {
+    background-color: var(--color-accent);
+    color: var(--color-header);
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    transition: opacity 0.2s;
+}
+
+.btn-pay-final:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.btn-pay-final:hover:not(:disabled) {
+    opacity: 0.9;
+}
